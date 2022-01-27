@@ -14,7 +14,7 @@ func NewBookRepository() BookRepository {
 	return &BookRepositoryImpl{}
 }
 
-func (repository *BookRepositoryImpl) Save(ctx context.Context, tx *sql.Tx, book domain.Book) domain.Book {
+func (repository *BookRepositoryImpl) Save(ctx context.Context, tx *sql.Tx, book domain.BookCreateOrUpdate) domain.BookCreateOrUpdate {
 	SQL := "INSERT INTO book(category_id, title, author, publisher, published_date, price, stock) VALUES (?, ?, ?, ?, ?, ?, ?)"
 	result, err := tx.ExecContext(ctx, SQL, book.CategoryId, book.Title, book.Author, book.Publisher, book.PublishedDate, book.Price, book.Stock)
 	helper.PanicIfError(err)

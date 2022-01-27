@@ -21,7 +21,7 @@ func ToCategoryResponses(categries []domain.Category) []web.CategoryResponse {
 	return categoryResponses
 }
 
-func ToBookResponse(book domain.Book) web.BookResponse {
+func ToBookResponseCreateOrUpdate(book domain.BookCreateOrUpdate) web.BookResponse {
 	return web.BookResponse{
 		Id:            book.Id,
 		CategoryId:    book.CategoryId,
@@ -34,8 +34,21 @@ func ToBookResponse(book domain.Book) web.BookResponse {
 	}
 }
 
-func ToBookResponses(books []domain.Book) []web.BookResponse {
-	var bookResponses []web.BookResponse
+func ToBookResponse(book domain.Book) web.BookResponses {
+	return web.BookResponses{
+		Id:            book.Id,
+		Category:      book.Category,
+		Title:         book.Title,
+		Author:        book.Author,
+		Publisher:     book.Publisher,
+		PublishedDate: book.PublishedDate,
+		Stock:         book.Stock,
+		Price:         book.Price,
+	}
+}
+
+func ToBookResponses(books []domain.Book) []web.BookResponses {
+	var bookResponses []web.BookResponses
 	for _, book := range books {
 		bookResponses = append(bookResponses, ToBookResponse(book))
 	}

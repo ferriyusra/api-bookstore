@@ -34,7 +34,7 @@ func (service *BookServiceImpl) Create(ctx context.Context, request web.BookCrea
 
 	defer helper.CommitOrRollback(tx)
 
-	book := domain.Book{
+	book := domain.BookCreateOrUpdate{
 		CategoryId:    request.CategoryId,
 		Title:         request.Title,
 		Author:        request.Author,
@@ -46,10 +46,10 @@ func (service *BookServiceImpl) Create(ctx context.Context, request web.BookCrea
 
 	book = service.BookRepository.Save(ctx, tx, book)
 
-	return helper.ToBookResponse(book)
+	return helper.ToBookResponseCreateOrUpdate(book)
 }
 
-func (service *BookServiceImpl) FindAll(ctx context.Context) []web.BookResponse {
+func (service *BookServiceImpl) FindAll(ctx context.Context) []web.BookResponses {
 	tx, err := service.DB.Begin()
 	helper.PanicIfError(err)
 

@@ -7,5 +7,5 @@ import (
 
 type BookService interface {
 	Create(ctx context.Context, request web.BookCreateRequest) web.BookResponse
-	FindAll(ctx context.Context) []web.BookResponse
+	FindAll(ctx context.Context) []web.BookResponses
 }
