@@ -13,6 +13,7 @@ func NewRouter(categoryController controller.CategoryController, bookController 
 
 	router.GET("/api/books", bookController.FindAll)
 	router.POST("/api/books", bookController.Create)
+	router.POST("/api/books/:bookId", bookController.FindById)
 
 	router.GET("/api/categories", categoryController.FindAll)
 	router.GET("/api/categories/:categoryId", categoryController.FindById)
