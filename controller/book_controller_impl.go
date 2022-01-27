@@ -24,7 +24,7 @@ func (controller *BookControllerImpl) Create(writer http.ResponseWriter, request
 	helper.ReadFromRequestBody(request, &bookCreateRequest)
 
 	bookResponse := controller.BookService.Create(request.Context(), bookCreateRequest)
-	BookWebResponse := web.BookWebResponse{
+	BookWebResponse := web.BookWebResponseCreateOrUpdate{
 		Code:   200,
 		Status: "OK",
 		Data:   bookResponse,
