@@ -46,7 +46,7 @@ func (repository *BookRepositoryImpl) FindById(ctx context.Context, tx *sql.Tx, 
 		err := rows.Scan(&book.Id, &book.CategoryId, &book.Title, &book.Author, &book.Publisher, &pubDate, &book.Price, &book.Stock, &book.Category)
 		helper.PanicIfError(err)
 
-		book.PublishedDate = pubDate.Format("01-02-2006")
+		book.PublishedDate = pubDate.Format("02-01-2006")
 
 		return book, nil
 	} else {
@@ -71,7 +71,7 @@ func (repository *BookRepositoryImpl) FindAll(ctx context.Context, tx *sql.Tx) [
 		err := rows.Scan(&book.Id, &book.CategoryId, &book.Title, &book.Author, &book.Publisher, &pubDate, &book.Price, &book.Stock, &book.Category)
 		helper.PanicIfError(err)
 
-		book.PublishedDate = pubDate.Format("01-02-2006")
+		book.PublishedDate = pubDate.Format("02-01-2006")
 		books = append(books, book)
 	}
 	return books
