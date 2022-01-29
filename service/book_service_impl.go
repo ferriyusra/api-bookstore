@@ -3,7 +3,6 @@ package service
 import (
 	"context"
 	"database/sql"
-	"ferri/api-bookstore/exception"
 	"ferri/api-bookstore/helper"
 	"ferri/api-bookstore/model/domain"
 	"ferri/api-bookstore/model/web"
@@ -35,7 +34,7 @@ func (service *BookServiceImpl) Create(ctx context.Context, request web.BookCrea
 
 	defer helper.CommitOrRollback(tx)
 
-	book := domain.BookCreateOrUpdate{
+	book := domain.Book{
 		CategoryId:    request.CategoryId,
 		Title:         request.Title,
 		Author:        request.Author,
@@ -47,24 +46,10 @@ func (service *BookServiceImpl) Create(ctx context.Context, request web.BookCrea
 
 	book = service.BookRepository.Save(ctx, tx, book)
 
-	return helper.ToBookResponseCreateOrUpdate(book)
-}
-
-func (service *BookServiceImpl) FindById(ctx context.Context, bookId int) web.BookResponses {
-	tx, err := service.DB.Begin()
-	helper.PanicIfError(err)
-
-	defer helper.CommitOrRollback(tx)
-
-	book, err := service.BookRepository.FindById(ctx, tx, bookId)
-	if err != nil {
-		panic(exception.NewNotFoundError(err.Error()))
-	}
-
 	return helper.ToBookResponse(book)
 }
 
-func (service *BookServiceImpl) FindAll(ctx context.Context) []web.BookResponses {
+func (service *BookServiceImpl) FindAll(ctx context.Context) []web.BookResponse {
 	tx, err := service.DB.Begin()
 	helper.PanicIfError(err)
 

@@ -5,7 +5,6 @@ import (
 	"ferri/api-bookstore/model/web"
 	"ferri/api-bookstore/service"
 	"net/http"
-	"strconv"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -25,41 +24,22 @@ func (controller *BookControllerImpl) Create(writer http.ResponseWriter, request
 	helper.ReadFromRequestBody(request, &bookCreateRequest)
 
 	bookResponse := controller.BookService.Create(request.Context(), bookCreateRequest)
-	BookWebResponse := web.BookWebResponseCreateOrUpdate{
+	BookWebResponse := web.BookWebResponse{
 		Code:   200,
 		Status: "OK",
 		Data:   bookResponse,
 	}
 
 	helper.WriteToResponseBody(writer, BookWebResponse)
-}
-
-func (controller *BookControllerImpl) FindById(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
-
-	bookId := params.ByName("bookId")
-	id, err := strconv.Atoi(bookId)
-	helper.PanicIfError(err)
-
-	bookResponse := controller.BookService.FindById(request.Context(), id)
-
-	BookWebResponse := web.BookWebResponseCreateOrUpdate{
-		Code:   200,
-		Status: "OK",
-		Data:   bookResponse,
-	}
-
-	helper.WriteToResponseBody(writer, BookWebResponse)
-
 }
 
 func (controller *BookControllerImpl) FindAll(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
 
 	bookResponses := controller.BookService.FindAll(request.Context())
 	BookWebResponse := web.BookWebResponse{
-		Code:      200,
-		Status:    "OK",
-		CountData: len(bookResponses),
-		Data:      bookResponses,
+		Code:   200,
+		Status: "OK",
+		Data:   bookResponses,
 	}
 
 	helper.WriteToResponseBody(writer, BookWebResponse)

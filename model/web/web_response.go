@@ -11,12 +11,6 @@ type CategoryWebResponse struct {
 	Data   interface{} `json:"data"`
 }
 type BookWebResponse struct {
-	Code      int         `json:"code"`
-	Status    string      `json:"status"`
-	CountData int         `json:"count_data"`
-	Data      interface{} `json:"data"`
-}
-type BookWebResponseCreateOrUpdate struct {
 	Code   int         `json:"code"`
 	Status string      `json:"status"`
 	Data   interface{} `json:"data"`
