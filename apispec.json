@@ -12,7 +12,7 @@
     ],
     "paths": {
         "/books": {
-            "post": {
+            "get": {
                 "security": [
                     {
                         "BookstroeAuth": []
@@ -61,9 +61,6 @@
                                         "status": {
                                             "type": "string"
                                         },
-                                        "count data": {
-                                            "type": "integer"
-                                        },
                                         "pagination": {
                                             "type": "object",
                                             "example": {
@@ -82,9 +79,7 @@
                         }
                     }
                 }
-            }
-        },
-        "/book/create": {
+            },
             "post": {
                 "security": [
                     {
@@ -107,7 +102,7 @@
                 },
                 "responses": {
                     "200": {
-                        "description": "Success Get All Books",
+                        "description": "Success Create new Books",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -120,10 +115,7 @@
                                             "type": "string"
                                         },
                                         "data": {
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "#/components/schemas/Books"
-                                            }
+                                            "$ref": "#/components/schemas/Books"
                                         }
                                     }
                                 }
@@ -512,17 +504,14 @@
                     "id": {
                         "type": "number"
                     },
-                    "category": {
-                        "type": "string"
+                    "category_id": {
+                        "type": "number"
                     },
                     "title": {
                         "type": "number"
                     },
                     "author": {
                         "type": "number"
-                    },
-                    "image": {
-                        "type": "string"
                     },
                     "publisher": {
                         "type": "string"
@@ -544,7 +533,10 @@
                     "id": {
                         "type": "number"
                     },
-                    "category": {
+                    "category_id": {
+                        "type": "number"
+                    },
+                    "category_name": {
                         "type": "string"
                     },
                     "title": {
@@ -552,9 +544,6 @@
                     },
                     "author": {
                         "type": "number"
-                    },
-                    "image": {
-                        "type": "string"
                     },
                     "publisher": {
                         "type": "string"
