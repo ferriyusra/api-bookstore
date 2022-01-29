@@ -5,6 +5,7 @@ import (
 	"ferri/api-bookstore/model/web"
 	"ferri/api-bookstore/service"
 	"net/http"
+	"strconv"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -31,6 +32,61 @@ func (controller *BookControllerImpl) Create(writer http.ResponseWriter, request
 	}
 
 	helper.WriteToResponseBody(writer, BookWebResponse)
+}
+
+func (controller *BookControllerImpl) Update(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
+
+	bookUpdateRequest := web.BookUpdateRequest{}
+	helper.ReadFromRequestBody(request, &bookUpdateRequest)
+
+	bookId := params.ByName("bookId")
+	id, err := strconv.Atoi(bookId)
+	helper.PanicIfError(err)
+
+	bookUpdateRequest.Id = id
+
+	bookResponse := controller.BookService.Update(request.Context(), bookUpdateRequest)
+	BookWebResponse := web.BookWebResponse{
+		Code:   200,
+		Status: "OK",
+		Data:   bookResponse,
+	}
+
+	helper.WriteToResponseBody(writer, BookWebResponse)
+
+}
+func (controller *BookControllerImpl) Delete(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
+
+	bookId := params.ByName("bookId")
+	id, err := strconv.Atoi(bookId)
+	helper.PanicIfError(err)
+
+	controller.BookService.Delete(request.Context(), id)
+	BookWebResponse := web.BookWebResponse{
+		Code:   200,
+		Status: "OK",
+	}
+
+	helper.WriteToResponseBody(writer, BookWebResponse)
+
+}
+
+func (controller *BookControllerImpl) FindById(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {
+
+	bookId := params.ByName("bookId")
+	id, err := strconv.Atoi(bookId)
+	helper.PanicIfError(err)
+
+	bookResponse := controller.BookService.FindById(request.Context(), id)
+
+	BookWebResponse := web.BookWebResponse{
+		Code:   200,
+		Status: "OK",
+		Data:   bookResponse,
+	}
+
+	helper.WriteToResponseBody(writer, BookWebResponse)
+
 }
 
 func (controller *BookControllerImpl) FindAll(writer http.ResponseWriter, request *http.Request, params httprouter.Params) {

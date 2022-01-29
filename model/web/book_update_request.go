@@ -8,4 +8,5 @@ type BookUpdateRequest struct {
 	Publisher     string `validate:"required,min=1,max=100" json:"publisher"`
 	PublishedDate string `validate:"required" json:"published_date"`
 	Price         int    `validate:"required" json:"price"`
+	Stock         int    `validate:"required" json:"stock"`
 }
