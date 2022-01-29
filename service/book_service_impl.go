@@ -102,7 +102,7 @@ func (service *BookServiceImpl) FindById(ctx context.Context, bookId int) web.Bo
 
 	defer helper.CommitOrRollback(tx)
 
-	book, _ := service.BookRepository.FindById(ctx, tx, bookId)
+	book, err := service.BookRepository.FindById(ctx, tx, bookId)
 
 	if err != nil {
 		panic(exception.NewNotFoundError(err.Error()))
